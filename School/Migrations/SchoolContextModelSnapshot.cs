@@ -52,6 +52,9 @@ namespace School.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.Property<int>("value")
                         .HasColumnType("int");
 
@@ -60,6 +63,8 @@ namespace School.Migrations
                     b.HasIndex("CourseId");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Score");
                 });
@@ -157,9 +162,17 @@ namespace School.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("School.Models.Teacher", "Teacher")
+                        .WithMany("Scores")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("School.Models.StudentCourse", b =>
@@ -239,6 +252,8 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Teacher", b =>
                 {
+                    b.Navigation("Scores");
+
                     b.Navigation("TeacherCourses");
 
                     b.Navigation("TeacherStudents");

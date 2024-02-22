@@ -11,10 +11,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Teacher  @Html.DisplayNameFor(model => model.Name)
             </th>
+            <th>Course Name</th>
             <th>Students</th>
-            <th>Courses</th>
 
         </tr>
     </thead>
@@ -23,19 +23,33 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+
+                @Html.DisplayFor(modelItem => item.Name)
                 </td>
-
                 <td>
-                    <form asp-action="ResgisterScore" method="post">
-                    @foreach (var course in item.TeacherStudents)
+                    @foreach(var course in item.TeacherCourses)
                     {
-                        @Html.DisplayFor(modelItem => course.Student.Name)
-
-                            <input  class="btn btn-primary mx-2" />
-                            <br />
+                        @Html.DisplayFor(modelItem => course.Course.Name)
                     }
-                            <button type="submit">send</button>
+                </td>
+                <td>
+                    <form asp-action="" method="post">
+                        @foreach (var course in item.TeacherCourses)
+                        {
+                            <input asp-for="@course.CourseId" type="hidden"  />
+                        }
+
+                        @foreach (var student in item.TeacherStudents)
+                        {
+
+                                @Html.DisplayFor(modelItem => student.Student.Name)
+                                <input asp-for="@student.Student.Id" type="hidden" />
+                            <input asp-for="@student.Student.Scores" class="btn btn-primary mx-2 my-1" />
+
+                                <br />
+                        }
+                       
+                        <button type="submit">send</button>
                         </form>
                 </td>
                 <td>

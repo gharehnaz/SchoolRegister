@@ -44,7 +44,7 @@ namespace School.Controllers
           
         }
         [HttpPost]
-        public async Task<IActionResult> ResgisterScore()
+        public async Task<IActionResult> ResgisterScore(Teacher teacher)
         {
            return View();
 

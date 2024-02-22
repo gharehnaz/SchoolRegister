@@ -17,6 +17,9 @@ namespace School.Models
             builder.HasOne(x => x.Course)
                             .WithMany(x => x.Scores)
                             .HasForeignKey(x => x.CourseId);
+            builder.HasOne(x => x.Teacher)
+                            .WithMany(x => x.Scores)
+                            .HasForeignKey(x => x.TeacherId);
         }
     }
 }

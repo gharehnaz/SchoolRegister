@@ -8,9 +8,7 @@
         public Student Student { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }
-        //public List<Book> Books { get; set; }
-        //public List<StudentCourse> StudentCourses { get; set; } = [];
-        //public List<TeacherCourse> TeacherCourses { get; set; } = [];
-
+        public int TeacherId { get; set; }
+        public Teacher Teacher { get; set; }
     }
 }

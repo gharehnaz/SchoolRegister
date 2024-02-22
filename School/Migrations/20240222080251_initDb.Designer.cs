@@ -11,8 +11,8 @@ using School.Models;
 namespace School.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    [Migration("20240220211620_initTeacherCourse")]
-    partial class initTeacherCourse
+    [Migration("20240222080251_initDb")]
+    partial class initDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,37 @@ namespace School.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("School.Models.Score", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Score");
                 });
 
             modelBuilder.Entity("School.Models.Student", b =>
@@ -120,6 +151,33 @@ namespace School.Migrations
                     b.ToTable("TeacherStudent", (string)null);
                 });
 
+            modelBuilder.Entity("School.Models.Score", b =>
+                {
+                    b.HasOne("School.Models.Course", "Course")
+                        .WithMany("Scores")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("School.Models.Student", "Student")
+                        .WithMany("Scores")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("School.Models.Teacher", "Teacher")
+                        .WithMany("Scores")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("School.Models.StudentCourse", b =>
                 {
                     b.HasOne("School.Models.Course", "Course")
@@ -179,6 +237,8 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Course", b =>
                 {
+                    b.Navigation("Scores");
+
                     b.Navigation("StudentCourses");
 
                     b.Navigation("TeacherCourses");
@@ -186,6 +246,8 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Student", b =>
                 {
+                    b.Navigation("Scores");
+
                     b.Navigation("StudentCourses");
 
                     b.Navigation("TeacherStudents");
@@ -193,6 +255,8 @@ namespace School.Migrations
 
             modelBuilder.Entity("School.Models.Teacher", b =>
                 {
+                    b.Navigation("Scores");
+
                     b.Navigation("TeacherCourses");
 
                     b.Navigation("TeacherStudents");

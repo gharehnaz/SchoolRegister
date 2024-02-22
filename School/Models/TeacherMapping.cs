@@ -9,6 +9,9 @@ namespace School.Models
         {
             builder.ToTable("Teacher");
             builder.HasKey(x => x.Id);
+            builder.HasMany(x => x.Scores)
+              .WithOne(x => x.Teacher)
+              .HasForeignKey(x => x.TeacherId);
         }
     }
 }
