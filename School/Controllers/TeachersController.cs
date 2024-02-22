@@ -26,13 +26,30 @@ namespace School.Controllers
                 .ToListAsync();
             return View(await _context.Teacher.ToListAsync());
         }
+        public async Task<IActionResult> ResgisterScore(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var teacher = await _context.Teachers.Include(x=>x.TeacherCourses).ThenInclude(x => x.Course).Where(x=>x.Id==id)
+                .Include(x => x.TeacherStudents).ThenInclude(x => x.Student).ToListAsync();
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+
+            return View(teacher);
+          
+        }
+        [HttpPost]
         public async Task<IActionResult> ResgisterScore()
         {
-            var teacher = await _context.Teachers
-                .Include(x => x.TeacherStudents).ThenInclude(x => x.Student)
-                .ToListAsync();
-            return View(await _context.Teacher.ToListAsync());
+           return View();
+
         }
+
         // GET: Teachers/Details/5
         public async Task<IActionResult> Details(int? id)
         {

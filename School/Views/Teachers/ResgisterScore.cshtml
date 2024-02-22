@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<School.Models.Teacher>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "RegisterScore";
 }
 
-<h1>Index</h1>
+<h1>RegisterScore</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -29,13 +27,16 @@
                 </td>
 
                 <td>
+                    <form asp-action="ResgisterScore" method="post">
                     @foreach (var course in item.TeacherStudents)
                     {
                         @Html.DisplayFor(modelItem => course.Student.Name)
 
-                        <input value="registerScore" class="btn btn-primary mx-2" />
-                        <br />
+                            <input  class="btn btn-primary mx-2" />
+                            <br />
                     }
+                            <button type="submit">send</button>
+                        </form>
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

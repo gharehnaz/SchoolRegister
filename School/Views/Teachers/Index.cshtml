@@ -15,7 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>Students</th>
             <th>Courses</th>
 
         </tr>
@@ -31,7 +30,7 @@
                     @foreach (var course in item.TeacherCourses)
                     {
                         @Html.DisplayFor(modelItem => course.Course.Name)
-                        <button asp-action="registerScore" class="btn btn-primary mx-2">registerScore</button>
+                        <a asp-action="ResgisterScore" class="btn btn-primary mx-2" asp-route-id="@item.Id">registerScore</a>
                         <br />
                     }
                 </td>
